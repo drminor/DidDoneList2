@@ -11,6 +11,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
+
+
+using Microsoft.EntityFrameworkCore;
+using DidDoneJobJournalService.Models.DB;
+
 namespace DidDoneJobJournalService
 {
     public class Startup
@@ -26,6 +31,8 @@ namespace DidDoneJobJournalService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            var connection = @"Server=DAVID1\SQLEXPRESS;Database=DidDone;Trusted_Connection=True;ConnectRetryCount=0";
+            services.AddDbContext<DidDoneContext>(options => options.UseSqlServer(connection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
