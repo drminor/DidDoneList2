@@ -3,37 +3,88 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using WebApiClientLib;
 
 namespace DidDoneListApp
 {
     public class DAL
     {
-        //http://192.168.1.125:8080/api/customers/2
+        #region Private Properties
 
-        public const string BASE_URI_HOST = "192.168.1.125";
-        public const int BASE_URI_PORT_NUMBER = 8080;
+        private EndPointDetails _endPointDetails;
 
-        public const string CUSTOMER_END_POINT = "api/Customers";
+        #endregion
+
+        #region Constructor
+
+        public DAL(EndPointDetails endPointDetails)
+        {
+            _endPointDetails = endPointDetails;
+        }
+
+        #endregion
+
+        #region Public Methods
 
         public async System.Threading.Tasks.Task<Uri> TestCreateCustomerAsync()
         {
-            HttpClient client = TheClient;
-            WebApiClient<Customers> customerWAClient = new WebApiClient<Customers>(CUSTOMER_END_POINT);
+            WebApiClient<Customers> customersWAClient = GetClient<Customers>(nameof(Customers));
 
-            Customers record = new Customers();
-            Uri uri = await customerWAClient.CreateRecordAsync(record, client);
+            Customers record = new Customers
+            {
+                CustomerId = 0,
+                FirstName = "New",
+                LastName = "Test",
+                StreetAddress = "1 North St.",
+                City = "Raleigh",
+                StateId = 1,
+                Zip = "27800"
+            };
+
+
+            HttpClient client = TheClient;
+
+            Uri uri = await customersWAClient.CreateRecordAsync(record, client);
             return uri;
         }
 
         public async System.Threading.Tasks.Task<Customers> TestGetCustomerAsync(string id)
         {
-            HttpClient client = TheClient;
-            WebApiClient<Customers> customerWAClient = new WebApiClient<Customers>(CUSTOMER_END_POINT);
+            WebApiClient<Customers> customersWAClient = GetClient<Customers>(nameof(Customers));
 
-            Customers record = await customerWAClient.GetRecordAsync(id, client);
+            HttpClient client = TheClient;
+            Customers record = await customersWAClient.GetRecordAsync(id, client);
             return record;
+        }
+
+        #endregion
+
+        #region WebApiClient Services
+
+        private Dictionary<string, object> _clients = new Dictionary<string, object>();
+        private WebApiClient<T> GetClient<T>(string serviceName) where T: class
+        {
+            if(!_clients.ContainsKey(serviceName))
+            {
+                string endPointAddress = _endPointDetails[serviceName];
+                WebApiClient<T> webApiClient = new WebApiClient<T>(endPointAddress);
+                _clients.Add(serviceName, webApiClient);
+
+                return webApiClient;
+            }
+            else
+            {
+                return (WebApiClient<T>)_clients[serviceName];
+            }
+        }
+
+        private string GetEndPointAddress(string serviceName)
+        {
+            string endPointAddress = _endPointDetails[serviceName];
+
+            //endPointAddress = $"{_endPointDetails.BaseUri}/{endPointAddress}";
+
+            return endPointAddress;
         }
 
         private HttpClient _theClient;
@@ -43,11 +94,11 @@ namespace DidDoneListApp
             {
                 if(_theClient == null)
                 {
-                    string baseUri = $"http://{BASE_URI_HOST}:{BASE_URI_PORT_NUMBER}/";
+                    //string baseUri = $"http://{_endPointDetails.HostName}:{BASE_URI_PORT_NUMBER}/";
 
                     _theClient = new HttpClient
                     {
-                        BaseAddress = new Uri(baseUri)
+                        BaseAddress = new Uri(_endPointDetails.BaseUri)
                     };
 
                     MediaTypeWithQualityHeaderValue mediaType = new MediaTypeWithQualityHeaderValue("application/json");
@@ -58,5 +109,7 @@ namespace DidDoneListApp
                 return _theClient;
             }
         }
+
+        #endregion
     }
 }

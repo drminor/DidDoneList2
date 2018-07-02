@@ -5,25 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Models\DB\Customers.cs" />
-    <Compile Remove="Models\DB\CustomerSite.cs" />
-    <Compile Remove="Models\DB\StateCodes.cs" />
-    <Compile Remove="Models\DB\Visits.cs" />
-    <Compile Remove="Models\DB\VisitWorker.cs" />
-    <Compile Remove="Models\DB\Workers.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="wwwroot\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Models\DB\Customers.cs" />
-    <None Include="Models\DB\CustomerSite.cs" />
-    <None Include="Models\DB\StateCodes.cs" />
-    <None Include="Models\DB\Visits.cs" />
-    <None Include="Models\DB\VisitWorker.cs" />
-    <None Include="Models\DB\Workers.cs" />
   </ItemGroup>
 
   <ItemGroup>
