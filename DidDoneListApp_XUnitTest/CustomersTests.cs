@@ -1,21 +1,14 @@
-using System;
-using Xunit;
-
 using DidDoneListApp;
-using System.Threading.Tasks;
 using DidDoneListModels;
-using WebApiClientLib;
-using System.Collections.Generic;
+using System;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace DidDoneListApp_XUnitTest
 {
-    public class UnitTest1
+    public class CustomersTests : DalTests
     {
-        public const string BASE_URI_HOST = "192.168.1.125";
-        public const int BASE_URI_PORT_NUMBER = 8080;
-
-        public const int WAIT_TIME = 10000;
-
+        public const int WAIT_TIME = 10000; // 10 seconds
 
         [Fact]
         public void TestCreateCustomer()
@@ -46,7 +39,7 @@ namespace DidDoneListApp_XUnitTest
         }
 
         [Fact]
-        public void TestGetCustomer2()
+        public void TestGetCustomer()
         {
             DAL dal = GetDataAccessLayer();
 
@@ -69,7 +62,7 @@ namespace DidDoneListApp_XUnitTest
                 if (task.IsCompletedSuccessfully)
                 {
                     result = task.Result;
-                    System.Diagnostics.Debug.WriteLine("Sucessfull retreived Customer record.");
+                    System.Diagnostics.Debug.WriteLine("Sucessfully retreived Customer record.");
 
                 }
                 else if (task.IsCanceled)
@@ -85,25 +78,6 @@ namespace DidDoneListApp_XUnitTest
             {
                 System.Diagnostics.Debug.WriteLine($"Stoped waiting after {WAIT_TIME / 1000} seconds.");
             }
-
-            return result;
-        }
-
-        private DAL GetDataAccessLayer()
-        {
-            EndPointDetails endPointDetails = GetEndPointDetails();
-            DAL result = new DAL(endPointDetails);
-            return result;
-        }
-
-        private EndPointDetails GetEndPointDetails()
-        {
-            Dictionary<string, string> serviceMap = new Dictionary<string, string>
-            {
-                { "Customers", "api/Customers" }
-            };
-
-            EndPointDetails result = new EndPointDetails(serviceMap, BASE_URI_HOST, BASE_URI_PORT_NUMBER);
 
             return result;
         }
