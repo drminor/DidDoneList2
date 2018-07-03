@@ -24,13 +24,6 @@ namespace DidDoneListApp.UWP
 
             LoadApplication(new DidDoneListApp.App());
 
-            DAL x = new DAL();
-
-            Task<Uri> result = x.TestCreateCustomerAsync();
-
-            result.RunSynchronously();
-
-            Uri answer = result.Result;
         }
     }
 }

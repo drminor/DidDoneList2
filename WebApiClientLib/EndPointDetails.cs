@@ -1,23 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace WebApiClientLib
 {
     public class EndPointDetails
     {
-
-        ////http://192.168.1.125:8080/api/customers/2
-
-        //public const string BASE_URI_HOST = "192.168.1.125";
-        //public const int BASE_URI_PORT_NUMBER = 8080;
-
-        ////public const string BASE_URI_HOST = "localhost";
-        ////public const int BASE_URI_PORT_NUMBER = 44367;
-
-        //public const string CUSTOMER_END_POINT = "api/Customers";
-
         #region Private Properties
+
         Dictionary<string, string> _endPointAddresses;
 
         public EndPointDetails(Dictionary<string, string> endPointAddresses, string hostName)

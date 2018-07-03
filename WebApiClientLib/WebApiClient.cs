@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -33,6 +34,19 @@ namespace WebApiClientLib
                 record = await response.Content.ReadAsAsync<T>();
             }
             return record;
+        }
+
+        public async Task<IEnumerable<T>> GetListAsync(HttpClient client)
+        {
+            IEnumerable<T> list = null;
+
+            string path = _endPointUri;
+            HttpResponseMessage response = await client.GetAsync(path);
+            if (response.IsSuccessStatusCode)
+            {
+                list = await response.Content.ReadAsAsync<IEnumerable<T>>();
+            }
+            return list;
         }
 
     }

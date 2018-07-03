@@ -20,7 +20,7 @@ namespace DidDoneListApp_XUnitTest
             return _dal;
         }
 
-        public const string BASE_URI_HOST = "192.168.1.125";
+        public const string BASE_URI_HOST = "172.20.10.2"; //"192.168.1.125";
         public const int BASE_URI_PORT_NUMBER = 8080;
 
         private EndPointDetails _endPointDetails = null;

@@ -1,6 +1,7 @@
 using DidDoneListApp;
 using DidDoneListModels;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -15,7 +16,18 @@ namespace DidDoneListApp_XUnitTest
         {
             DAL dal = GetDataAccessLayer();
 
-            Task<Uri> task = dal.TestCreateCustomerAsync();
+            Customers record = new Customers
+            {
+                CustomerId = 0,
+                FirstName = "New",
+                LastName = "Test",
+                StreetAddress = "1 North St.",
+                City = "Raleigh",
+                StateId = 1,
+                Zip = "27800"
+            };
+
+            Task<Uri> task = dal.CreateCustomerAsync(record);
 
             if(task.Wait(WAIT_TIME))
             {
@@ -55,7 +67,7 @@ namespace DidDoneListApp_XUnitTest
         {
             Customers result = null;
 
-            Task<Customers> task = dal.TestGetCustomerAsync(id);
+            Task<Customers> task = dal.GetCustomerAsync(id);
 
             if (task.Wait(WAIT_TIME))
             {
@@ -82,7 +94,37 @@ namespace DidDoneListApp_XUnitTest
             return result;
         }
 
+        [Fact]
+        public void TestGetAllCustomers()
+        {
+            DAL dal = GetDataAccessLayer();
+
+            IEnumerable<Customers> list = null;
+
+            Task<IEnumerable<Customers>> task = dal.GetCustomerListAsync();
+
+            if (task.Wait(WAIT_TIME))
+            {
+                if (task.IsCompletedSuccessfully)
+                {
+                    list = task.Result;
+                    System.Diagnostics.Debug.WriteLine("Sucessfully retreived Customer record.");
+
+                }
+                else if (task.IsCanceled)
+                {
+                    System.Diagnostics.Debug.WriteLine("Was cancelled.");
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("Was faulted.");
+                }
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine($"Stoped waiting after {WAIT_TIME / 1000} seconds.");
+            }
+        }
+
     }
-
-
 }

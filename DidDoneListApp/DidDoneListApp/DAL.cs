@@ -5,6 +5,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using WebApiClientLib;
 
+using System.Threading.Tasks;
+
 namespace DidDoneListApp
 {
     public class DAL
@@ -26,21 +28,9 @@ namespace DidDoneListApp
 
         #region Public Methods
 
-        public async System.Threading.Tasks.Task<Uri> TestCreateCustomerAsync()
+        public async Task<Uri> CreateCustomerAsync(Customers record)
         {
             WebApiClient<Customers> customersWAClient = GetClient<Customers>(nameof(Customers));
-
-            Customers record = new Customers
-            {
-                CustomerId = 0,
-                FirstName = "New",
-                LastName = "Test",
-                StreetAddress = "1 North St.",
-                City = "Raleigh",
-                StateId = 1,
-                Zip = "27800"
-            };
-
 
             HttpClient client = TheClient;
 
@@ -48,13 +38,22 @@ namespace DidDoneListApp
             return uri;
         }
 
-        public async System.Threading.Tasks.Task<Customers> TestGetCustomerAsync(string id)
+        public async Task<Customers> GetCustomerAsync(string id)
         {
             WebApiClient<Customers> customersWAClient = GetClient<Customers>(nameof(Customers));
 
             HttpClient client = TheClient;
             Customers record = await customersWAClient.GetRecordAsync(id, client);
             return record;
+        }
+
+        public async Task<IEnumerable<Customers>> GetCustomerListAsync()
+        {
+            WebApiClient<Customers> customersWAClient = GetClient<Customers>(nameof(Customers));
+
+            HttpClient client = TheClient;
+            IEnumerable<Customers> list = await customersWAClient.GetListAsync(client);
+            return list;
         }
 
         #endregion
