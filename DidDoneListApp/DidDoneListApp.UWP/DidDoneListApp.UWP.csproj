@@ -156,14 +156,14 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DidDoneListApp\DidDoneListApp.csproj">
-      <Project>{A38439DA-B1C3-4A5E-B66D-0EE1E55C8AF8}</Project>
-      <Name>DidDoneListApp</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="DidDoneListApp.UWP_TemporaryKey.pfx" />
     <None Include="Temp1.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DidDoneListApp\DidDoneListApp.csproj">
+      <Project>{181e1307-5990-4d90-83ea-0b3c34c69cb5}</Project>
+      <Name>DidDoneListApp</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
