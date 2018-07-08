@@ -33,7 +33,6 @@ namespace DidDoneListApp
             WebApiClient<Customers> customersWAClient = GetClient<Customers>(nameof(Customers));
 
             HttpClient client = TheClient;
-
             Uri uri = await customersWAClient.CreateRecordAsync(record, client);
             return uri;
         }

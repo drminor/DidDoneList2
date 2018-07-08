@@ -14,15 +14,23 @@ namespace WebApiClientLib
             _endPointUri = endPointUri;
         }
 
-        public async Task<Uri> CreateRecordAsync(T record, HttpClient client)
+        // Get All Records
+        public async Task<IEnumerable<T>> GetListAsync(HttpClient client)
         {
-            HttpResponseMessage response = await client.PostAsJsonAsync(_endPointUri, record);
-            response.EnsureSuccessStatusCode();
+            IEnumerable<T> list = null;
 
-            // return URI of the created resource.
-            return response.Headers.Location;
+            string path = _endPointUri;
+            HttpResponseMessage response = await client.GetAsync(path);
+            if (response.IsSuccessStatusCode)
+            {
+                list = await response.Content.ReadAsAsync<IEnumerable<T>>();
+            }
+            return list;
         }
 
+        // TODO: Get All Records with a Where Clause
+
+        // Get Record by simple key
         public async Task<T> GetRecordAsync(string Id, HttpClient client)
         {
             T record = null;
@@ -36,18 +44,21 @@ namespace WebApiClientLib
             return record;
         }
 
-        public async Task<IEnumerable<T>> GetListAsync(HttpClient client)
-        {
-            IEnumerable<T> list = null;
+        // TODO: Support compound keys
 
-            string path = _endPointUri;
-            HttpResponseMessage response = await client.GetAsync(path);
-            if (response.IsSuccessStatusCode)
-            {
-                list = await response.Content.ReadAsAsync<IEnumerable<T>>();
-            }
-            return list;
+        // Create Record
+        public async Task<Uri> CreateRecordAsync(T record, HttpClient client)
+        {
+            HttpResponseMessage response = await client.PostAsJsonAsync(_endPointUri, record);
+            response.EnsureSuccessStatusCode();
+
+            // return URI of the created resource.
+            return response.Headers.Location;
         }
+
+        // TODO: Update Record
+
+        // TODO: Delete Record
 
     }
 }
