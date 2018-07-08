@@ -7,7 +7,7 @@ namespace WebApiClientLib
 {
     public class WebApiClient<T> where T : class
     {
-        private string _endPointUri;
+        private readonly string _endPointUri;
 
         public WebApiClient(string endPointUri)
         {

@@ -7,7 +7,7 @@ namespace WebApiClientLib
     {
         #region Private Properties
 
-        Dictionary<string, string> _endPointAddresses;
+        readonly Dictionary<string, string> _endPointAddresses;
 
         public EndPointDetails(Dictionary<string, string> endPointAddresses, string hostName)
             : this(endPointAddresses, hostName, -1)

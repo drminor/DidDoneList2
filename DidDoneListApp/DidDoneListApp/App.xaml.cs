@@ -11,10 +11,13 @@ namespace DidDoneListApp
 		{
 			InitializeComponent();
 
-			MainPage = new MainPage();
-		}
+            //MainPage = new MainPage();
+            //NavigationPage navPage = new NavigationPage(new Page1());
 
-		protected override void OnStart ()
+            MainPage = new NavigationPage(new Page1());
+        }
+
+        protected override void OnStart ()
 		{
 			// Handle when your app starts
 		}
