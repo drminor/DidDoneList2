@@ -14,7 +14,7 @@ namespace DidDoneListApp
             //MainPage = new MainPage();
             //NavigationPage navPage = new NavigationPage(new Page1());
 
-            MainPage = new NavigationPage(new Page1());
+            MainPage = new NavigationPage(new CustomersPage());
         }
 
         protected override void OnStart ()
