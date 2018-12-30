@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DidDoneListApp.CustomersPage">
-    
+             x:Class="DidDoneListApp.Views.Splash" >
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to the Customers Page!!"
+            <Label Text="This is the splash screen!"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
+
+            <Button Clicked="Button_Clicked" Text="Press Me"/>
         </StackLayout>
     </ContentPage.Content>
-    
 </ContentPage>

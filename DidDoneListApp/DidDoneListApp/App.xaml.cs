@@ -1,20 +1,17 @@
-using System;
+using DidDoneListApp.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-[assembly: XamlCompilation (XamlCompilationOptions.Compile)]
+[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace DidDoneListApp
 {
-	public partial class App : Application
+    public partial class App : Application
 	{
-		public App ()
+
+        public App ()
 		{
-			InitializeComponent();
-
-            //MainPage = new MainPage();
-            //NavigationPage navPage = new NavigationPage(new Page1());
-
-            MainPage = new NavigationPage(new CustomersPage());
+            InitializeComponent();
+            MainPage = new NavigationPage(new Splash());
         }
 
         protected override void OnStart ()
